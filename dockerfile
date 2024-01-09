@@ -9,9 +9,11 @@ RUN apt-get update
 
 # install dependencies
 
-RUN pip install --upgrade pip
-# COPY ./requirements.txt /app/
-RUN pip install -r requirements.txt
+# Install core dependencies.
+RUN apt-get update && apt-get install -y libpq-dev build-essential
+
+# Install production dependencies.
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
