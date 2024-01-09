@@ -21,12 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--o1t#=f08bjsgxnk1b2_b_m)4gefog^!u(e!g%ihoi)8h%iy!o'
+# SECRET_KEY = 'django-insecure--o1t#=f08bjsgxnk1b2_b_m)4gefog^!u(e!g%ihoi)8h%iy!o'
+
+SECRET_KEY = os.environ.get("SECRET_KEY","secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+DEBUG = os.environ.get ("DEBUG", True)
+
+ALLOWED_HOSTS = ['.onrender.com']
 
 
 # Application definition
@@ -51,6 +55,7 @@ CORS_ALLOWED_ORIGINS = [
 MIDDLEWARE = [
     # ...
     'corsheaders.middleware.CorsMiddleware',
+    "whitenoise.middleware .WhiteNoiseMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -126,14 +131,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
-if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
-    # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Turn on WhiteNoise storage backend that takes care of compressing static files
-    # and creating unique names for each version so they can safely be cached forever.
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR/'assets'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
