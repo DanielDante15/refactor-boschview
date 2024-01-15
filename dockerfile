@@ -12,8 +12,7 @@ RUN apt-get update
 # Install core dependencies.
 RUN apt-get update && apt-get install -y libpq-dev build-essential
 
-# Install production dependencies.
-RUN pip install -r ./requirements.txt
+RUN pip install -r /requirements.txt
 
 COPY . /app
 
