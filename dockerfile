@@ -13,4 +13,4 @@ RUN pip install asgiref==3.7.2 attrs==23.1.0 Django==3.2.1 django-cors-headers==
 
 COPY . /app
 
-ENTRYPOINT [ "gunicorn", "core.wsgi"]
+ENTRYPOINT [ "gunicorn", "api.wsgi"]
